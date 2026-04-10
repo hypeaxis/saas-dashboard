@@ -1,0 +1,6 @@
+-   This project builded by Next.js
+-   This project is using Tailwind CSS for styling, shadcn/ui for UI components. Cấu hình style css globals và các thành phần liên quan nằm trong src/styles
+-   This project have dark mode and light mode. Dark mode is default.
+-   This project using Jotai for state management.
+-   This project using React Hook Form for form handling.
+-   This project using Zod for schema validation.
