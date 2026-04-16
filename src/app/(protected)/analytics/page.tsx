@@ -134,9 +134,9 @@ export default function AnalyticsPage() {
     //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
     //           </svg>
     //         </div>
-    //         <h2 className="text-xl font-semibold">Chưa có dữ liệu phân tích</h2>
+    //         <h2 className="text-xl font-semibold">No analysis data available</h2>
     //         <p className="text-muted-foreground text-sm max-w-sm">
-    //           Hãy tạo thêm một vài công việc ở màn hình Task List để xem các biểu đồ thống kê.
+    //           Create some tasks in the Task List to see analytics.
     //         </p>
     //       </div>
     //     );
@@ -148,24 +148,24 @@ export default function AnalyticsPage() {
         <div>
             <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
             <p className="text-muted-foreground mt-2 text-sm">
-            Phân tích chi tiết hiệu suất và khối lượng công việc của bạn.
+            Detailed analysis of your performance and workload.
             </p>
         </div>
 
         {/* KPI Cards */}
         <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="text-sm font-medium text-muted-foreground">Tổng số công việc</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Total</h3>
             <p className="mt-2 text-3xl font-bold">{tasks.length}</p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="text-sm font-medium text-muted-foreground">Tỉ lệ hoàn thành</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Completion Rate</h3>
             <p className="mt-2 text-3xl font-bold text-primary">
                 {typeof completionRate === "number" ? `${completionRate.toFixed(1)}%` : completionRate}
             </p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="text-sm font-medium text-muted-foreground">Đang thực hiện</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">In Progress</h3>
             <p className="mt-2 text-3xl font-bold">
                 {statusCounts.doing}
             </p>
@@ -176,7 +176,7 @@ export default function AnalyticsPage() {
         <div className="grid gap-6 md:grid-cols-2">
             {/* Priority Donut Chart */}
             <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="mb-4 text-base font-semibold">Phân bổ độ ưu tiên</h3>
+            <h3 className="mb-4 text-base font-semibold">Priority Distribution</h3>
             <div className="flex flex-1 items-center justify-center overflow-hidden">
                 <HighchartsReact highcharts={Highcharts} options={priorityChartOptions} />
             </div>
@@ -184,7 +184,7 @@ export default function AnalyticsPage() {
 
             {/* Status Column Chart */}
             <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
-            <h3 className="mb-4 text-base font-semibold">Trạng thái công việc</h3>
+            <h3 className="mb-4 text-base font-semibold">Task Status</h3>
             <div className="flex flex-1 items-center justify-center overflow-hidden">
                 <HighchartsReact highcharts={Highcharts} options={statusChartOptions} />
             </div>
