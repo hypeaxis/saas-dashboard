@@ -17,9 +17,10 @@ This system moves beyond flat HEX codes. We use a palette built on Material Desi
 - **Surface Foundations:** `surface` (#faf8ff) and `surface_container` series (Lowest to Highest) form our structural layers.
 - **Accents:** `tertiary` (#924700) provides a warm, editorial contrast to the cool primary blues.
 
-### The "No-Line" Rule
-Standard 1px borders are a crutch for poor hierarchy. **This design system prohibits 1px solid borders for sectioning.** 
-*   **The Execution:** Boundaries must be defined by background shifts. For example, a `surface_container_low` sidebar should sit against a `surface` main content area. If a container needs to stand out, use a shift in tonal value rather than a stroke.
+### The "No-Line" Rule (Pragmatic)
+Standard 1px borders should not be the default tool for hierarchy. **Prioritize tonal separation first; use borders selectively for dense data surfaces.**
+*   **The Execution:** Prefer background shifts (`surface` tiers) for large layout regions. For high-information components (tables, chart cards, modal section splits), a low-contrast border is allowed to improve scanability.
+*   **Border spec when used:** `border` token at reduced opacity (typically 20% to 40%), never full-strength outline for primary sectioning.
 
 ### The "Glass & Gradient" Rule
 To inject "soul" into the UI, main CTAs and hero elements should utilize subtle linear gradients: `primary` → `primary_container`. For floating menus (Command Palettes, Popovers), use Glassmorphism:
@@ -72,12 +73,12 @@ If accessibility requires a container boundary, use a **Ghost Border**: `outline
 *   **Tertiary:** Ghost style. No fill/border until hover.
 
 ### Cards & Lists: The White Space Rule
-*   **Prohibition:** No divider lines between list items or card sections. 
-*   **Separation:** Use 16px–24px of vertical white space or a subtle `surface_container` shift on hover to define rows.
+*   **Default:** Avoid heavy separators; rely on vertical spacing (16px to 24px) and tonal hover states.
+*   **As-built exception:** Subtle row dividers may be used for table readability (`divide-border/40`) when data density is high.
 
 ### Inputs: The Inlaid Aesthetic
-*   **Default State:** `surface_container_low` background with a `sm` (0.25rem) corner radius.
-*   **Focus State:** 2px solid `primary`. No "glow." The transition should be instant and sharp.
+*   **Default State:** `surface_container_low` background with `sm` radius.
+*   **Focus State:** ring in `primary` with strong contrast and no blur glow.
 
 ### The "Command Surface" (Special Component)
 Inspired by Linear. A floating `display-md` or `display-sm` command bar using the Glassmorphism rule. This is the heart of the "Modern SaaS" experience—minimalist, keyboard-driven, and lightning-fast.
@@ -92,11 +93,9 @@ Inspired by Linear. A floating `display-md` or `display-sm` command bar using th
 *   **Do** allow content to breathe. If a section feels crowded, double the padding.
 
 ### Don't
-*   **Don't** use 100% opaque `outline` colors for borders.
+*   **Don't** use high-contrast borders as the primary layout structure.
 *   **Don't** use default Inter tracking. Tighten `display` levels (-0.02em) and loosen `label` levels (+0.05em).
-*   **Don't** use "Card-in-Card" layouts with borders. Use nested tonal shifts (e.g., a `surface_container_highest` card inside a `surface_container_low` section).
-
----
+*   **Don't** over-stack bordered cards when tonal nesting can communicate depth better.
 
 ## 7. Roundedness Scale
 To maintain the professional "Architectural" feel, we use a disciplined radius system:
@@ -104,3 +103,11 @@ To maintain the professional "Architectural" feel, we use a disciplined radius s
 *   **Default:** 0.5rem (Standard cards, buttons)
 *   **Large (lg):** 1rem (Main layout containers, modals)
 *   **Full:** 9999px (Pills, badges)
+
+---
+
+## 8. As-Built Notes (2026-04-16)
+Current implementation aligns with this system at token/typography level and applies these practical choices:
+*   `surface-card`, `surface-panel`, and `cta-gradient` are first-class utilities across app shell and task flows.
+*   Light borders are present in table header/footer, modal section boundaries, and analytics cards.
+*   Analytics charts are rendered inside bordered cards to improve contrast and readability for chart axes and labels.

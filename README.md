@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TaskMaster SaaS Dashboard
 
-## Getting Started
+TaskMaster is a Next.js task management dashboard with login, task CRUD, and analytics views. The UI follows the Architectural Minimalist token system with a practical as-built approach.
 
-First, run the development server:
+## Core Features
+- Authentication with NextAuth:
+	- Credentials provider (demo account)
+	- Optional Google provider (enabled via env)
+- Protected workspace routes:
+	- /dashboard
+	- /tasks
+	- /analytics
+- Task management:
+	- Create, view, edit, delete tasks
+	- Search and status filtering
+	- Activity feed for create/update/delete actions
+- Analytics:
+	- Completion rate
+	- Priority distribution (donut)
+	- Task status distribution (column)
 
+## Tech Stack
+- Next.js (App Router)
+- Tailwind CSS + CSS variables
+- NextAuth
+- Jotai
+- React Hook Form + Zod
+- Highcharts
+
+## Local Development
+
+1. Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create .env.local at project root
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Recommended variables:
+- NEXTAUTH_SECRET
+- NEXTAUTH_URL
+- DEMO_EMAIL (optional)
+- DEMO_PASSWORD (optional)
+- GOOGLE_CLIENT_ID (optional)
+- GOOGLE_CLIENT_SECRET (optional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you do not use Google OAuth, credentials login still works with fallback values in source.
 
-## Learn More
+3. Run dev server
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open app
+```text
+http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Demo Credentials
+- Email: demo@taskmaster.dev
+- Password: taskmaster123
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+These values can be overridden with:
+- DEMO_EMAIL
+- DEMO_PASSWORD
 
-## Deploy on Vercel
+## Design and Product Docs
+- Product and requirements: Docs/SRS.md
+- Design system: Docs/DESIGN.md
+- Delivery status and backlog: Docs/plan.md
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Current Known Gaps
+- Dashboard "View Full History" button is placeholder.
+- Tasks pagination controls are placeholder.
+- Analytics timeline chart is not implemented yet.
