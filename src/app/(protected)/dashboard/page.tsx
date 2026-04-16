@@ -46,7 +46,7 @@ const StatusBadge = ({ status }: { status: Status }) => {
 const PriorityBadge = ({ priority }: { priority: Priority }) => {
     const config = {
         low: "bg-surface-container-high text-secondary",
-        medium: "bg-secondary-container text-foreground",
+        medium: "bg-primary/15 text-primary dark:bg-primary/25 dark:text-primary-foreground",
         high: "bg-destructive/10 text-destructive dark:bg-destructive/20",
     };
     return (
