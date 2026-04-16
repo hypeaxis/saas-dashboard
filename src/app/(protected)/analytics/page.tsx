@@ -11,8 +11,21 @@ import {
     statusCountsAtom,
 } from "src/store/tasks";
 
-export default function AnalyticsPage() {
+const CHART_COLORS = {
+    priority: {
+        high: "#ef4444",
+        medium: "#f59e0b",
+        low: "#10b981",
+        fallback: "#94a3b8",
+    },
+    status: {
+        todo: "#64748b",
+        doing: "#2563eb",
+        done: "#16a34a",
+    },
+} as const;
 
+export default function AnalyticsPage() {
     const tasks = useAtomValue(tasksAtom);
     const priorityCounts = useAtomValue(priorityCountsAtom);
     const statusCounts = useAtomValue(statusCountsAtom);
@@ -31,17 +44,30 @@ export default function AnalyticsPage() {
         y: value as number,
 
         color: 
-            key === "high" ? "var(--destructive)" : 
-            key === "medium" ? "var(--warning)" : "var(--success)", 
+            key === "high" ? CHART_COLORS.priority.high : 
+            key === "medium" ? CHART_COLORS.priority.medium :
+            key === "low" ? CHART_COLORS.priority.low :
+            CHART_COLORS.priority.fallback
         }));
 
         return {
-        chart: { type: "pie", backgroundColor: "transparent" },
+        chart: {
+            type: "pie",
+            backgroundColor: "transparent",
+            height: 280,
+            spacingTop: 8,
+            spacingBottom: 8,
+            spacingLeft: 8,
+            spacingRight: 8,
+        },
         title: { text: "" },
         tooltip: { pointFormat: "<b>{point.y} tasks</b>" },
         plotOptions: {
             pie: {
-            innerSize: "60%", // Biến thành Donut chart cho hiện đại
+            innerSize: "60%", 
+            borderWidth: 2,
+            borderColor: "#ffffff",
+            size: "88%",
             dataLabels: { enabled: true, format: "<b>{point.name}</b>: {point.y}" },
             },
         },
@@ -52,17 +78,45 @@ export default function AnalyticsPage() {
 
     const statusChartOptions = useMemo(() => {
         return {
-        chart: { type: "column", backgroundColor: "transparent" },
+        chart: {
+            type: "column",
+            backgroundColor: "transparent",
+            height: 280,
+            spacingTop: 8,
+            spacingBottom: 16,
+            spacingLeft: 8,
+            spacingRight: 8,
+        },
         title: { text: "" },
-        xAxis: { categories: ["Todo", "In Progress", "Done"] },
-        yAxis: { title: { text: "Số lượng Task" } },
+        xAxis: {
+            categories: ["Todo", "In Progress", "Done"],
+            lineColor: "#cbd5e1",
+            labels: {
+                style: {
+                    fontSize: "12px",
+                },
+            },
+        },
+        yAxis: {
+            title: { text: undefined },
+            gridLineColor: "#e2e8f0",
+            allowDecimals: false,
+        },
+        plotOptions: {
+            column: {
+                borderRadius: 6,
+                pointPadding: 0.12,
+                groupPadding: 0.2,
+                maxPointWidth: 56,
+            },
+        },
         series: [
             {
             name: "Tasks",
             data: [
-                { y: statusCounts.todo, color: "var(--muted-foreground)" },
-                { y: statusCounts.doing, color: "var(--primary)" },
-                { y: statusCounts.done, color: "var(--success)" },
+                { y: statusCounts.todo, color: CHART_COLORS.status.todo },
+                { y: statusCounts.doing, color: CHART_COLORS.status.doing },
+                { y: statusCounts.done, color: CHART_COLORS.status.done },
             ],
             showInLegend: false,
             },
@@ -121,17 +175,17 @@ export default function AnalyticsPage() {
         {/* Charts Grid */}
         <div className="grid gap-6 md:grid-cols-2">
             {/* Priority Donut Chart */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
             <h3 className="mb-4 text-base font-semibold">Phân bổ độ ưu tiên</h3>
-            <div className="h-[300px] w-full">
+            <div className="flex flex-1 items-center justify-center overflow-hidden">
                 <HighchartsReact highcharts={Highcharts} options={priorityChartOptions} />
             </div>
             </div>
 
             {/* Status Column Chart */}
-            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
             <h3 className="mb-4 text-base font-semibold">Trạng thái công việc</h3>
-            <div className="h-[300px] w-full">
+            <div className="flex flex-1 items-center justify-center overflow-hidden">
                 <HighchartsReact highcharts={Highcharts} options={statusChartOptions} />
             </div>
             </div>
