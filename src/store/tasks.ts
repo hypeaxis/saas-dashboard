@@ -35,6 +35,16 @@ export const taskModalAtom = atom<TaskModalState>({
     editingTaskId: null,
 });
 
+export type TaskDetailsState = {
+    isOpen: boolean;
+    taskId: string | null;
+};
+
+export const taskDetailAtom = atom<TaskDetailsState>({
+    isOpen: false,
+    taskId: null,
+});
+
 export type DeleteConfirmState = {
     isOpen: boolean;
     taskId: string | null;
@@ -85,3 +95,4 @@ export const completionRateAtom = atom<number>((get) => {
 
     return Math.round(rate * 100) / 100;
 });
+

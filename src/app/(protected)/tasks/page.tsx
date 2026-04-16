@@ -3,8 +3,9 @@
 import { useAtom, useAtomValue } from "jotai";
 import { 
     Search, 
-    Plus, 
-    Edit2, 
+    Plus,
+    Eye,
+    Edit2,  
     Trash, 
     SignalHigh, 
     SignalMedium, 
@@ -16,12 +17,14 @@ import {
     filterAtom, 
     deleteConfirmAtom,
     taskModalAtom,
+    taskDetailAtom,
     type TaskFilter 
 } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
 import { cn } from "src/lib/utils";
 import type { Priority, Status } from "src/types/task";
 import DeleteConfirmModal from "src/components/tasks/DeleteConfirmModal";
+import TaskDetailModal from "src/components/tasks/TaskDetailModal";
 
 // Helper định dạng ngày
 const formatDate = (dateStr?: string) => {
@@ -71,9 +74,14 @@ export default function TasksPage() {
     const [filter, setFilter] = useAtom(filterAtom);
     const [modalState, setModalState] = useAtom(taskModalAtom);
     const [deleteState, setDeleteState] = useAtom(deleteConfirmAtom);
+    const [detailState, setDetailState] = useAtom(taskDetailAtom);
 
     const handleCreateTask = () => {
         setModalState({ isOpen: true, editingTaskId: null });
+    };
+
+    const handleViewTask = (taskId: string) => {
+        setDetailState({ isOpen: true, taskId });
     };
 
     const handleEditTask = (taskId: string) => {
@@ -147,11 +155,6 @@ export default function TasksPage() {
                                             <span className={cn("text-sm font-medium text-foreground", task.status === "done" && "line-through opacity-70")}>
                                                 {task.title}
                                             </span>
-                                            {task.description && (
-                                                <span className="text-xs text-muted-foreground mt-0.5 truncate max-w-[300px]">
-                                                    {task.description}
-                                                </span>
-                                            )}
                                         </div>
                                     </td>
                                     <td className="px-6 py-5">
@@ -169,12 +172,22 @@ export default function TasksPage() {
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 type="button"
+                                                onClick={() => handleViewTask(task.id)}
+                                                aria-label={`View ${task.title}`}
+                                                className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-surface-container-high"
+                                            >
+                                                <Eye className="size-4" />
+                                            </button>
+
+                                            <button
+                                                type="button"
                                                 onClick={() => handleEditTask(task.id)}
                                                 aria-label={`Edit ${task.title}`}
                                                 className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-surface-container-high"
                                             >
                                                 <Edit2 className="size-4" />
                                             </button>
+
                                             <button
                                                 type="button"
                                                 onClick={() => handleDeleteTask(task.id)}
@@ -210,45 +223,9 @@ export default function TasksPage() {
                     </div>
                 </div>
             </div>
-
-            {/* Secondary Quick Actions (Bento-style) */}
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                <div className="bg-primary/5 p-6 rounded-xl flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                        <Zap className="size-5" />
-                    </div>
-                    <h3 className="title-sm text-foreground">AI Priority Sweep</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Let our intelligence engine suggest priority changes based on upcoming deadlines.</p>
-                    <button className="mt-2 text-primary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all w-fit">
-                        Run Sweep <ArrowRight className="size-3" />
-                    </button>
-                </div>
-                
-                <div className="bg-surface-container-low p-6 rounded-xl flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-foreground">
-                        <Users className="size-5" />
-                    </div>
-                    <h3 className="title-sm text-foreground">Bulk Reassign</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">Move all "Todo" tasks to a new team member or department instantly.</p>
-                    <button className="mt-2 text-foreground text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all w-fit">
-                        Select Member <ArrowRight className="size-3" />
-                    </button>
-                </div>
-                
-                <div className="bg-tertiary/5 p-6 rounded-xl flex flex-col gap-3">
-                    <div className="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
-                        <History className="size-5" />
-                    </div>
-                    <h3 className="title-sm text-foreground">Review Activity</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">See recent changes made to task statuses and ownership in the last 24h.</p>
-                    <button className="mt-2 text-tertiary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all w-fit">
-                        View Audit Log <ArrowRight className="size-3" />
-                    </button>
-                </div>
-            </div> */}
-            </div>
-
+        </div>
             <DeleteConfirmModal />
+            <TaskDetailModal />
         </>
     );
 }
