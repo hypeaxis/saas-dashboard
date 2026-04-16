@@ -1,16 +1,7 @@
 "use client";
 
 import { useAtom, useAtomValue } from "jotai";
-import { 
-    Search, 
-    Plus,
-    Eye,
-    Edit2,  
-    Trash, 
-    SignalHigh, 
-    SignalMedium, 
-    SignalLow
-} from "lucide-react";
+import { Search, Plus, Eye, Edit2, Trash } from "lucide-react";
 import { 
     filteredTasksAtom, 
     searchAtom, 
@@ -22,50 +13,10 @@ import {
 } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
 import { cn } from "src/lib/utils";
-import type { Priority, Status } from "src/types/task";
 import DeleteConfirmModal from "src/components/tasks/DeleteConfirmModal";
 import TaskDetailModal from "src/components/tasks/TaskDetailModal";
-
-// Helper định dạng ngày
-const formatDate = (dateStr?: string) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-    });
-};
-
-// Component UI hiển thị Status
-const StatusBadge = ({ status }: { status: Status }) => {
-    const config = {
-        todo: { label: "Todo", className: "bg-surface-container-highest text-muted-foreground" },
-        doing: { label: "In Progress", className: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400" },
-        done: { label: "Done", className: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400" },
-    };
-    const { label, className } = config[status];
-    return (
-        <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide", className)}>
-            {label}
-        </span>
-    );
-};
-
-// Component UI hiển thị Priority kèm Icon
-const PriorityBadge = ({ priority }: { priority: Priority }) => {
-    const config = {
-        low: { icon: SignalLow, className: "text-muted-foreground" },
-        medium: { icon: SignalMedium, className: "text-primary" },
-        high: { icon: SignalHigh, className: "text-destructive" },
-    };
-    const { icon: Icon, className } = config[priority];
-    return (
-        <div className="flex items-center gap-1.5 text-foreground">
-            <Icon className={cn("size-4", className)} />
-            <span className="text-sm capitalize">{priority}</span>
-        </div>
-    );
-};
+import { PriorityBadge, StatusBadge } from "src/components/tasks/TaskBadges";
+import { formatTaskDate } from "src/lib/task";
 
 export default function TasksPage() {
     // Kết nối State với Jotai
@@ -74,7 +25,7 @@ export default function TasksPage() {
     const [filter, setFilter] = useAtom(filterAtom);
     const [modalState, setModalState] = useAtom(taskModalAtom);
     const [deleteState, setDeleteState] = useAtom(deleteConfirmAtom);
-    const [detailState, setDetailState] = useAtom(taskDetailAtom);
+    const [, setDetailState] = useAtom(taskDetailAtom);
 
     const handleCreateTask = () => {
         setModalState({ isOpen: true, editingTaskId: null });
@@ -165,7 +116,7 @@ export default function TasksPage() {
                                     </td>
                                     <td className="px-6 py-5">
                                         <span className={cn("text-sm", task.status === "done" ? "text-muted-foreground/50 line-through" : "text-muted-foreground")}>
-                                            {formatDate(task.deadline)}
+                                            {formatTaskDate(task.deadline)}
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 text-right">
@@ -177,15 +128,6 @@ export default function TasksPage() {
                                                 className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-surface-container-high"
                                             >
                                                 <Eye className="size-4" />
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                onClick={() => handleEditTask(task.id)}
-                                                aria-label={`Edit ${task.title}`}
-                                                className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-surface-container-high"
-                                            >
-                                                <Edit2 className="size-4" />
                                             </button>
 
                                             <button

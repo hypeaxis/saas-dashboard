@@ -2,59 +2,13 @@
 
 import { useAtomValue } from "jotai";
 import Link from "next/link";
-import {
-    ListTodo,
-    Clock,
-    CheckCircle2,
-    AlertTriangle,
-    Edit2,
-    PlusCircle,
-    Trash
-} from "lucide-react";
+import { ListTodo, Clock, CheckCircle2, AlertTriangle, Edit2, PlusCircle, Trash } from "lucide-react";
 
 import { activitiesAtom, tasksAtom } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
 import { cn } from "src/lib/utils";
-import type { Priority, Status } from "src/types/task";
-
-// Helper định dạng ngày tháng
-const formatDate = (dateStr?: string) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-    });
-};
-
-// Component UI hiển thị Status
-const StatusBadge = ({ status }: { status: Status }) => {
-    const config = {
-        todo: { label: "Todo", className: "bg-surface-container-highest text-muted-foreground" },
-        doing: { label: "In Progress", className: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400" },
-        done: { label: "Completed", className: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400" },
-    };
-    const { label, className } = config[status];
-    return (
-        <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide", className)}>
-            {label}
-        </span>
-    );
-};
-
-// Component UI hiển thị Priority
-const PriorityBadge = ({ priority }: { priority: Priority }) => {
-    const config = {
-        low: "bg-surface-container-high text-secondary",
-        medium: "bg-primary/15 text-primary dark:bg-primary/25 dark:text-primary-foreground",
-        high: "bg-destructive/10 text-destructive dark:bg-destructive/20",
-    };
-    return (
-        <span className={cn("inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide", config[priority])}>
-            {priority}
-        </span>
-    );
-};
+import { PriorityBadge, StatusBadge } from "src/components/tasks/TaskBadges";
+import { formatTaskDate } from "src/lib/task";
 
 export default function DashboardPage() {
     // Đọc dữ liệu tasks từ Jotai
@@ -165,7 +119,7 @@ export default function DashboardPage() {
                                             <PriorityBadge priority={task.priority} />
                                         </td>
                                         <td className="px-6 py-4 text-sm text-muted-foreground">
-                                            {formatDate(task.deadline)}
+                                            {formatTaskDate(task.deadline)}
                                         </td>
                                     </tr>
                                 ))}
@@ -201,7 +155,7 @@ export default function DashboardPage() {
                                         <span className="text-foreground font-medium">{activity.message}</span>
                                     </p>
                                     <p className="text-xs text-muted-foreground/70 mt-1">
-                                        {formatDate(activity.createdAt)}
+                                        {formatTaskDate(activity.createdAt)}
                                     </p>
                                 </div>
                             </div>

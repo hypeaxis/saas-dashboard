@@ -8,18 +8,27 @@ import * as z from "zod";
 import { X } from "lucide-react";
 import { activitiesAtom, tasksAtom, taskModalAtom } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
-import type { Activity, Task, Status, Priority } from "src/types/task";
+import { createTaskActivity } from "src/lib/task";
+import { TASK_PRIORITY_VALUES, TASK_STATUS_VALUES } from "src/types/task";
+import type { Task } from "src/types/task";
 
-// 1. Zod Schema Validation
 const taskSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters."),
     description: z.string().optional(),
-    status: z.enum(["todo", "doing", "done"]),
-    priority: z.enum(["low", "medium", "high"]),
+    status: z.enum(TASK_STATUS_VALUES),
+    priority: z.enum(TASK_PRIORITY_VALUES),
     deadline: z.string().optional(),
 });
 
 type TaskFormValues = z.infer<typeof taskSchema>;
+
+const EMPTY_TASK_FORM_VALUES = {
+    title: "",
+    description: "",
+    status: "todo",
+    priority: "medium",
+    deadline: "",
+} satisfies TaskFormValues;
 
 export default function TaskModal() {
     const [modalState, setModalState] = useAtom(taskModalAtom);
@@ -37,16 +46,9 @@ export default function TaskModal() {
         formState: { errors },
     } = useForm<TaskFormValues>({
         resolver: zodResolver(taskSchema),
-        defaultValues: {
-            title: "",
-            description: "",
-            status: "todo",
-            priority: "medium",
-            deadline: "",
-        },
+        defaultValues: EMPTY_TASK_FORM_VALUES,
     });
 
-    // Reset form mỗi khi Modal mở hoặc thay đổi task đang edit
     useEffect(() => {
         if (modalState.isOpen) {
             if (editingTask) {
@@ -58,13 +60,7 @@ export default function TaskModal() {
                     deadline: editingTask.deadline ?? "",
                 });
             } else {
-                reset({
-                    title: "",
-                    description: "",
-                    status: "todo",
-                    priority: "medium",
-                    deadline: "",
-                });
+                reset(EMPTY_TASK_FORM_VALUES);
             }
         }
     }, [modalState.isOpen, editingTask, reset]);
@@ -73,20 +69,13 @@ export default function TaskModal() {
         setModalState({ isOpen: false, editingTaskId: null });
     };
 
-    const addActivity = (activity: Activity) => {
-        setActivities((prev) => [activity, ...prev]);
-    };
-
     const onSubmit = (values: TaskFormValues) => {
         const now = new Date().toISOString();
 
         if (isEditMode && editingTask) {
-            // Update existing task
             const updatedTask = {
                 ...editingTask,
                 ...values,
-                status: values.status as Status,
-                priority: values.priority as Priority,
                 updatedAt: now,
             };
 
@@ -96,38 +85,24 @@ export default function TaskModal() {
                 )
             );
 
-            addActivity({
-                id: `activity-${Date.now()}`,
-                type: "update",
-                taskId: editingTask.id,
-                message: `Updated task ${updatedTask.title}`,
-                createdAt: now,
-            });
+            setActivities((prev) => [createTaskActivity("update", updatedTask, now), ...prev]);
         } else {
-            // Create new task
             const newTask: Task = {
                 id: `task-${Date.now()}`,
                 title: values.title,
                 description: values.description,
-                status: values.status as Status,
-                priority: values.priority as Priority,
+                status: values.status,
+                priority: values.priority,
                 deadline: values.deadline,
                 createdAt: now,
                 updatedAt: now,
             };
-            // Thêm lên đầu danh sách
+
             setTasks((prev) => [newTask, ...prev]);
 
-            addActivity({
-                id: `activity-${Date.now()}`,
-                type: "create",
-                taskId: newTask.id,
-                message: `Created task ${newTask.title}`,
-                createdAt: now,
-            });
+            setActivities((prev) => [createTaskActivity("create", newTask, now), ...prev]);
         }
 
-        // Đóng modal sau khi submit thành công
         closeModal();
     };
 

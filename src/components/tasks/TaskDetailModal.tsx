@@ -1,33 +1,11 @@
 "use client";
 
-import React from "react";
 import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import { tasksAtom, taskDetailAtom, taskModalAtom } from "src/store/tasks";
-import { cn } from "src/lib/utils";
 import { X, Calendar, Clock, Hash, AlignLeft, Activity, Flag } from "lucide-react";
-import { Button } from "shadcn/button";
-
-const formatDateTime = (dateStr?: string) => {
-    if (!dateStr) return "-";
-    const date = new Date(dateStr);
-    return date.toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-    });
-};
-
-const formatDate = (dateStr?: string) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-    });
-};
+import { Button } from "src/components/ui/button";
+import { PriorityBadge, StatusBadge } from "src/components/tasks/TaskBadges";
+import { formatTaskDate, formatTaskDateTime } from "src/lib/task";
 
 export default function TaskDetailModal() {
     const [detailState, setDetailState] = useAtom(taskDetailAtom);
@@ -80,17 +58,13 @@ export default function TaskDetailModal() {
                             <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                                 <Activity className="size-3.5" /> Status
                             </span>
-                            <div className="text-sm font-semibold uppercase tracking-wide text-foreground">
-                                {task.status === "todo" ? "To Do" : task.status === "doing" ? "In Progress" : "Done"}
-                            </div>
+                            <StatusBadge status={task.status} />
                         </div>
                         <div className="space-y-1.5">
                             <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                                 <Flag className="size-3.5" /> Priority
                             </span>
-                            <div className="text-sm font-semibold capitalize text-foreground">
-                                {task.priority}
-                            </div>
+                            <PriorityBadge priority={task.priority} />
                         </div>
                     </div>
 
@@ -110,19 +84,19 @@ export default function TaskDetailModal() {
                             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                 <Clock className="size-3" /> Created At
                             </span>
-                            <div className="text-sm font-medium">{formatDateTime(task.createdAt)}</div>
+                            <div className="text-sm font-medium">{formatTaskDateTime(task.createdAt)}</div>
                         </div>
                         <div className="space-y-1">
                             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                 <Clock className="size-3" /> Updated At
                             </span>
-                            <div className="text-sm font-medium">{formatDateTime(task.updatedAt)}</div>
+                            <div className="text-sm font-medium">{formatTaskDateTime(task.updatedAt)}</div>
                         </div>
                         <div className="space-y-1">
                             <span className="flex items-center gap-1.5 text-xs text-destructive">
                                 <Calendar className="size-3" /> Deadline
                             </span>
-                            <div className="text-sm font-medium text-destructive">{formatDate(task.deadline)}</div>
+                            <div className="text-sm font-medium text-destructive">{formatTaskDate(task.deadline)}</div>
                         </div>
                     </div>
                 </div>

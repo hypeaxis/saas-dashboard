@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useAtomValue } from "jotai";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -10,20 +10,13 @@ import {
     completionRateAtom,
     statusCountsAtom,
 } from "src/store/tasks";
-
-const CHART_COLORS = {
-    priority: {
-        high: "#ef4444",
-        medium: "#f59e0b",
-        low: "#10b981",
-        fallback: "#94a3b8",
-    },
-    status: {
-        todo: "#64748b",
-        doing: "#2563eb",
-        done: "#16a34a",
-    },
-} as const;
+import {
+    TASK_PRIORITY_CHART_COLORS,
+    TASK_PRIORITY_LABELS,
+    TASK_STATUS_CHART_COLORS,
+    TASK_STATUS_LABELS,
+} from "src/lib/task";
+import { TASK_PRIORITY_VALUES, TASK_STATUS_VALUES } from "src/types/task";
 
 export default function AnalyticsPage() {
     const tasks = useAtomValue(tasksAtom);
@@ -32,96 +25,83 @@ export default function AnalyticsPage() {
     const completionRate = useAtomValue(completionRateAtom);
 
     const priorityChartOptions = useMemo(() => {
-
-        const priorityLabels: Record<keyof typeof priorityCounts, string> = {
-            low: "Low",
-            medium: "Medium",
-            high: "High",
-        };
-
-        const data = Object.entries(priorityCounts).map(([key, value]) => ({
-        name: priorityLabels[key as keyof typeof priorityLabels],
-        y: value as number,
-
-        color: 
-            key === "high" ? CHART_COLORS.priority.high : 
-            key === "medium" ? CHART_COLORS.priority.medium :
-            key === "low" ? CHART_COLORS.priority.low :
-            CHART_COLORS.priority.fallback
+        const data = TASK_PRIORITY_VALUES.map((priority) => ({
+            name: TASK_PRIORITY_LABELS[priority],
+            y: priorityCounts[priority],
+            color: TASK_PRIORITY_CHART_COLORS[priority],
         }));
 
         return {
-        chart: {
-            type: "pie",
-            backgroundColor: "transparent",
-            height: 280,
-            spacingTop: 8,
-            spacingBottom: 8,
-            spacingLeft: 8,
-            spacingRight: 8,
-        },
-        title: { text: "" },
-        tooltip: { pointFormat: "<b>{point.y} tasks</b>" },
-        plotOptions: {
-            pie: {
-            innerSize: "60%", 
-            borderWidth: 2,
-            borderColor: "#ffffff",
-            size: "88%",
-            dataLabels: { enabled: true, format: "<b>{point.name}</b>: {point.y}" },
+            chart: {
+                type: "pie",
+                backgroundColor: "transparent",
+                height: 280,
+                spacingTop: 8,
+                spacingBottom: 8,
+                spacingLeft: 8,
+                spacingRight: 8,
             },
-        },
-        series: [{ name: "Priority", colorByPoint: true, data }],
-        credits: { enabled: false },
+            title: { text: "" },
+            tooltip: { pointFormat: "<b>{point.y} tasks</b>" },
+            plotOptions: {
+                pie: {
+                    innerSize: "60%",
+                    borderWidth: 2,
+                    borderColor: "#ffffff",
+                    size: "88%",
+                    dataLabels: { enabled: true, format: "<b>{point.name}</b>: {point.y}" },
+                },
+            },
+            series: [{ name: "Priority", colorByPoint: true, data }],
+            credits: { enabled: false },
         };
     }, [priorityCounts]);
 
     const statusChartOptions = useMemo(() => {
         return {
-        chart: {
-            type: "column",
-            backgroundColor: "transparent",
-            height: 280,
-            spacingTop: 8,
-            spacingBottom: 16,
-            spacingLeft: 8,
-            spacingRight: 8,
-        },
-        title: { text: "" },
-        xAxis: {
-            categories: ["Todo", "In Progress", "Done"],
-            lineColor: "#cbd5e1",
-            labels: {
-                style: {
-                    fontSize: "12px",
+            chart: {
+                type: "column",
+                backgroundColor: "transparent",
+                height: 280,
+                spacingTop: 8,
+                spacingBottom: 16,
+                spacingLeft: 8,
+                spacingRight: 8,
+            },
+            title: { text: "" },
+            xAxis: {
+                categories: TASK_STATUS_VALUES.map((status) => TASK_STATUS_LABELS[status]),
+                lineColor: "#cbd5e1",
+                labels: {
+                    style: {
+                        fontSize: "12px",
+                    },
                 },
             },
-        },
-        yAxis: {
-            title: { text: undefined },
-            gridLineColor: "#e2e8f0",
-            allowDecimals: false,
-        },
-        plotOptions: {
-            column: {
-                borderRadius: 6,
-                pointPadding: 0.12,
-                groupPadding: 0.2,
-                maxPointWidth: 56,
+            yAxis: {
+                title: { text: undefined },
+                gridLineColor: "#e2e8f0",
+                allowDecimals: false,
             },
-        },
-        series: [
-            {
-            name: "Tasks",
-            data: [
-                { y: statusCounts.todo, color: CHART_COLORS.status.todo },
-                { y: statusCounts.doing, color: CHART_COLORS.status.doing },
-                { y: statusCounts.done, color: CHART_COLORS.status.done },
+            plotOptions: {
+                column: {
+                    borderRadius: 6,
+                    pointPadding: 0.12,
+                    groupPadding: 0.2,
+                    maxPointWidth: 56,
+                },
+            },
+            series: [
+                {
+                    name: "Tasks",
+                    data: TASK_STATUS_VALUES.map((status) => ({
+                        y: statusCounts[status],
+                        color: TASK_STATUS_CHART_COLORS[status],
+                    })),
+                    showInLegend: false,
+                },
             ],
-            showInLegend: false,
-            },
-        ],
-        credits: { enabled: false },
+            credits: { enabled: false },
         };
     }, [statusCounts]);
 
