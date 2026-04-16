@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { seedActivities, seedTasks } from "src/lib/mock-seed";
-import type { Activity, Status, Task } from "src/types/task";
+import type { Activity, Priority, Status, Task } from "src/types/task";
 
 export type TaskFilter = "all" | Status;
 
@@ -23,6 +23,33 @@ export const filteredTasksAtom = atom((get) => {
 
         return matchStatus && matchSearch;
     });
+});
+
+export type PriorityCount = Record<Priority, number>;
+
+export const priorityCountsAtom = atom<PriorityCount>((get) => {
+    const tasks = get(tasksAtom);
+
+    return tasks.reduce<PriorityCount>(
+        (acc, task) => {
+            acc[task.priority] += 1;
+            return acc;
+        },
+        { low: 0, medium: 0, high: 0 }
+    );
+});
+
+export const completionRateAtom = atom<number>((get) => {
+    const tasks = get(tasksAtom);
+
+    if (tasks.length === 0) {
+        return 0;
+    }
+
+    const completed = tasks.filter((task) => task.status === "done").length;
+    const rate = (completed / tasks.length) * 100;
+
+    return Math.round(rate * 100) / 100;
 });
 
 export type TaskModalState = {
