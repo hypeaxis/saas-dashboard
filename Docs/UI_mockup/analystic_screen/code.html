@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskMaster Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffdcc6",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary": "#0058be",
+                    "on-secondary-fixed-variant": "#304671",
+                    "on-surface": "#131b2e",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d2d9f4",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-tint": "#005ac2",
+                    "tertiary": "#924700",
+                    "on-secondary": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-primary-fixed": "#001a42",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e2e7ff",
+                    "on-tertiary-container": "#fffbff",
+                    "inverse-on-surface": "#eef0ff",
+                    "outline": "#727785",
+                    "surface": "#faf8ff",
+                    "outline-variant": "#c2c6d6",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "on-secondary-container": "#405682",
+                    "surface-bright": "#faf8ff",
+                    "secondary-fixed-dim": "#b1c6f9",
+                    "primary-container": "#2170e4",
+                    "surface-container": "#eaedff",
+                    "inverse-surface": "#283044",
+                    "secondary": "#495e8a",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#311400",
+                    "inverse-primary": "#adc6ff",
+                    "surface-variant": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-slate-50 dark:bg-slate-900 flex flex-col gap-2 p-4 border-r border-slate-200 dark:border-slate-800 font-inter text-sm antialiased">
+<div class="flex items-center gap-3 px-2 mb-8">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+</div>
+<div>
+<h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">TaskMaster</h1>
+<p class="text-[10px] uppercase tracking-wider font-bold text-slate-500">Enterprise Plan</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+                Tasks
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-semibold shadow-sm translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                Analytics
+            </a>
+</nav>
+<div class="mt-auto p-2">
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low">
+<img alt="User profile" class="w-8 h-8 rounded-full bg-slate-200" data-alt="professional headshot of a corporate executive in a modern office setting with soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9IfQdGJ4e3w0NGopHXVlDRXupOdF62ca7BZaOQjVUBSOtVttgEx0ZjpzOt6mqSqyVI0FUHbAJcDwi9WvduaI7TsdGxX2a85J7fRoma6fXNdU1ojNaZeKuPld2bhnsWGTC1MIQEwMIuuLpUOEWy6ECpQy2V0hH71cPsbLY7eZ5TlS9wiJ978Dqh_XMvhnezqRdtGYt2C3CvJIBSs9e9InKQUp9F3ftn9dTx1IEUM9XDklaXSzSMMhEDvR27ZgTz9ir-t2bpugQeq9P"/>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-semibold truncate">Alex Rivera</p>
+<p class="text-[10px] text-on-surface-variant truncate">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar Component -->
+<header class="sticky top-0 z-40 w-full bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 flex justify-between items-center h-16 px-8">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-blue-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium">Analytics Overview</span>
+<span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-[11px] font-bold tracking-[0.05em] uppercase text-tertiary">Performance Report</p>
+<h2 class="text-3xl font-bold tracking-tight text-on-surface">System Analytics</h2>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 text-sm font-medium rounded-lg bg-surface-container-high hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                        Last 30 Days
+                    </button>
+<button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary text-on-primary hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Export PDF
+                    </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Completion Rate Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_4px_24px_-2px_rgba(19,27,46,0.04)] border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="p-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+</div>
+<span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+2.4%</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">Completion Rate</p>
+<h3 class="text-4xl font-bold mt-1 text-on-surface">92%</h3>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<!-- Avg Tasks Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_4px_24px_-2px_rgba(19,27,46,0.04)] border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="p-2 rounded-lg bg-tertiary/10 text-tertiary">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full">Stable</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">Avg Tasks / Day</p>
+<h3 class="text-4xl font-bold mt-1 text-on-surface">15</h3>
+</div>
+<div class="flex gap-1 mt-2 items-end h-6">
+<div class="flex-1 bg-tertiary/20 rounded-t-sm h-3"></div>
+<div class="flex-1 bg-tertiary/20 rounded-t-sm h-4"></div>
+<div class="flex-1 bg-tertiary h-6 rounded-t-sm"></div>
+<div class="flex-1 bg-tertiary/60 rounded-t-sm h-5"></div>
+<div class="flex-1 bg-tertiary/40 rounded-t-sm h-4"></div>
+</div>
+</div>
+<!-- Overdue Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_4px_24px_-2px_rgba(19,27,46,0.04)] border border-outline-variant/15 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="p-2 rounded-lg bg-error/10 text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<span class="text-xs font-bold text-error bg-error-container px-2 py-1 rounded-full">-1.2%</span>
+</div>
+<div>
+<p class="text-sm font-medium text-on-surface-variant">Overdue %</p>
+<h3 class="text-4xl font-bold mt-1 text-on-surface">4%</h3>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Lowest this quarter</p>
+</div>
+</div>
+<!-- Main Analytics Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Line Chart: Tasks Over Time -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h4 class="text-lg font-semibold">Tasks Over Time</h4>
+<p class="text-sm text-on-surface-variant">Tracking throughput across the team</p>
+</div>
+<select class="bg-surface-container-low border-none rounded-lg text-xs font-medium focus:ring-0">
+<option>All Projects</option>
+<option>Internal</option>
+</select>
+</div>
+<!-- Line Chart Visual Representation -->
+<div class="relative h-64 w-full">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 300">
+<!-- Grid Lines -->
+<line class="text-slate-100" stroke="currentColor" stroke-dasharray="4" x1="0" x2="1000" y1="50" y2="50"></line>
+<line class="text-slate-100" stroke="currentColor" stroke-dasharray="4" x1="0" x2="1000" y1="150" y2="150"></line>
+<line class="text-slate-100" stroke="currentColor" stroke-dasharray="4" x1="0" x2="1000" y1="250" y2="250"></line>
+<!-- Area Gradient -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2170e4" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#2170e4" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,250 L100,220 L200,240 L300,180 L400,200 L500,120 L600,150 L700,80 L800,100 L900,40 L1000,60 L1000,300 L0,300 Z" fill="url(#chartGradient)"></path>
+<!-- Line -->
+<path d="M0,250 L100,220 L200,240 L300,180 L400,200 L500,120 L600,150 L700,80 L800,100 L900,40 L1000,60" fill="none" stroke="#0058be" stroke-linecap="round" stroke-width="3"></path>
+<!-- Nodes -->
+<circle cx="500" cy="120" fill="#0058be" r="4" stroke="white" stroke-width="2"></circle>
+<circle cx="900" cy="40" fill="#0058be" r="4" stroke="white" stroke-width="2"></circle>
+</svg>
+<div class="absolute top-8 left-[50%] -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded shadow-lg pointer-events-none">
+                            120 Tasks Completed
+                        </div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<!-- Pie Chart: Task Distribution by Priority -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15 flex flex-col">
+<h4 class="text-lg font-semibold mb-2">Priority Distribution</h4>
+<p class="text-sm text-on-surface-variant mb-8">Workload balance by severity</p>
+<div class="flex-1 flex items-center justify-center relative">
+<div class="w-48 h-48 rounded-full border-[16px] border-slate-100 flex items-center justify-center relative">
+<!-- CSS Segment Mockup -->
+<div class="absolute inset-[-16px] rounded-full border-[16px] border-primary" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%);"></div>
+<div class="absolute inset-[-16px] rounded-full border-[16px] border-tertiary" style="clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);"></div>
+<div class="text-center">
+<span class="text-2xl font-bold">1.2k</span>
+<p class="text-[10px] uppercase text-on-surface-variant font-bold">Total</p>
+</div>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span>High Priority</span>
+</div>
+<span class="font-bold">25%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<span>Medium</span>
+</div>
+<span class="font-bold">45%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-slate-200"></div>
+<span>Low Priority</span>
+</div>
+<span class="font-bold">30%</span>
+</div>
+</div>
+</div>
+<!-- Bar Chart: Tasks by Status -->
+<div class="col-span-12 bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/15">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h4 class="text-lg font-semibold">Tasks by Status</h4>
+<p class="text-sm text-on-surface-variant">Current lifecycle distribution</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-xs">
+<div class="w-3 h-3 bg-primary rounded-sm"></div>
+<span>Completed</span>
+</div>
+<div class="flex items-center gap-2 text-xs">
+<div class="w-3 h-3 bg-surface-container-high rounded-sm"></div>
+<span>In Progress</span>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Bar 1 -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-medium">
+<span>UI Design Revamp</span>
+<span class="text-on-surface-variant">85/100 tasks</span>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded-lg overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 85%"></div>
+<div class="h-full bg-secondary-container" style="width: 10%"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-medium">
+<span>Backend Migration</span>
+<span class="text-on-surface-variant">42/100 tasks</span>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded-lg overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 42%"></div>
+<div class="h-full bg-secondary-container" style="width: 35%"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-medium">
+<span>Marketing Launch</span>
+<span class="text-on-surface-variant">94/100 tasks</span>
+</div>
+<div class="h-8 w-full bg-surface-container-low rounded-lg overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 94%"></div>
+<div class="h-full bg-secondary-container" style="width: 4%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Milestones (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 bg-gradient-to-br from-primary to-primary-container p-8 rounded-xl text-on-primary flex flex-col justify-between min-h-[200px]">
+<span class="material-symbols-outlined text-3xl">workspace_premium</span>
+<div>
+<h5 class="text-xl font-bold">Efficiency Peak</h5>
+<p class="text-primary-fixed-dim text-sm mt-1">Team velocity increased by 18% during the final sprint of the quarter.</p>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl flex flex-col justify-center items-center text-center">
+<p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Longest Streak</p>
+<span class="text-4xl font-bold text-on-surface">12</span>
+<p class="text-xs text-on-surface-variant mt-1">Days with zero overdue</p>
+</div>
+<div class="bg-tertiary-container p-6 rounded-xl text-on-tertiary-container flex flex-col justify-between">
+<span class="material-symbols-outlined">trending_up</span>
+<div>
+<h5 class="font-bold">Next Goal</h5>
+<p class="text-xs opacity-80">Reduce task churn by 5%</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Suppression for Analytics Page per instruction -->
+</body></html>

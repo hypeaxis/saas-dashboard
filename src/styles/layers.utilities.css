@@ -1,5 +1,32 @@
-/* Utilities layer: custom utility classes */
+/* Reusable utility helpers for the design system */
 
 @layer utilities {
-    /* Add tiny utilities, e.g., .content-auto, .mask-gradient */
+    .ambient-lift {
+        box-shadow: var(--shadow-ambient-lift);
+    }
+
+    .surface-shell {
+        background: var(--surface);
+        color: var(--on-surface);
+    }
+
+    .surface-tier-lowest {
+        background: var(--surface-container-lowest);
+    }
+
+    .surface-tier-low {
+        background: var(--surface-container-low);
+    }
+
+    .surface-tier-high {
+        background: var(--surface-container-high);
+    }
+
+    .surface-tier-highest {
+        background: var(--surface-container-highest);
+    }
+
+    .surface-bright {
+        background: var(--surface-bright);
+    }
 }

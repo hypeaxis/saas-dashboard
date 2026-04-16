@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskMaster - Enterprise Tasks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffdcc6",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary": "#0058be",
+                    "on-secondary-fixed-variant": "#304671",
+                    "on-surface": "#131b2e",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "on-error-container": "#93000a",
+                    "surface-dim": "#d2d9f4",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-tint": "#005ac2",
+                    "tertiary": "#924700",
+                    "on-secondary": "#ffffff",
+                    "background": "#faf8ff",
+                    "on-primary-fixed": "#001a42",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e2e7ff",
+                    "on-tertiary-container": "#fffbff",
+                    "inverse-on-surface": "#eef0ff",
+                    "outline": "#727785",
+                    "surface": "#faf8ff",
+                    "outline-variant": "#c2c6d6",
+                    "surface-container-highest": "#dae2fd",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "on-secondary-container": "#405682",
+                    "surface-bright": "#faf8ff",
+                    "secondary-fixed-dim": "#b1c6f9",
+                    "primary-container": "#2170e4",
+                    "surface-container": "#eaedff",
+                    "inverse-surface": "#283044",
+                    "secondary-container": "#b6ccff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-surface-variant": "#424754",
+                    "tertiary-container": "#b75b00",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-low": "#f2f3ff",
+                    "on-background": "#131b2e",
+                    "on-secondary-fixed": "#001a42",
+                    "secondary": "#495e8a",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-tertiary-fixed": "#311400",
+                    "inverse-primary": "#adc6ff",
+                    "surface-variant": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-surface {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-x-hidden">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-slate-50 dark:bg-slate-900 flex flex-col gap-2 p-4 border-r border-slate-200 dark:border-slate-800 font-inter text-sm antialiased z-50">
+<div class="mb-8 px-2 flex flex-col gap-0.5">
+<span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">TaskMaster</span>
+<span class="text-xs text-slate-500 font-medium tracking-wide uppercase">Enterprise Plan</span>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- ACTIVE STATE: Tasks -->
+<a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 font-semibold shadow-sm rounded-lg translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Analytics</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200/50 flex items-center gap-3 px-2">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="Organization Logo" class="w-full h-full object-cover" data-alt="professional corporate headshot of a mature executive with a confident smile in a bright modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBK0V7XuVqKbv4Iy1SLEM4NsrKdv_NCBndKtsi5oXEBUICHeTZgLTdxzXAtm57ooRSrUNTG6bSKGjA78wTQhqIB5rGNamth8GRMIFt1VLWDziK8kQqCRV59rfjb7eEU1Nesc-gDhET9LXr-wATLP0WJqIfXAfsnxGoIgi7gALWkEv_BWsSORD-bvAn2W7oGwibtLlF50JkY2jKd_nPeaUsizVN-pM5X-4TfiHXl1cX8B3SbnjaH-mJOBtXXv_C0W--ZwaiIzSV-qur"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold">Acme Corp</span>
+<span class="text-[10px] text-slate-500">Admin Panel</span>
+</div>
+</div>
+</aside>
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar Anchor -->
+<header class="sticky top-0 z-40 w-full glass-surface flex justify-between items-center h-16 px-8 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-4 w-1/2">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Quick search tasks..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary/10">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="close-up portrait of a young professional man with glasses looking into the camera with a neutral expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGSE8eso6eOx23rDShyZ_vCmoowdYV5MrrtBUoNHhzcXLBZjWExOQMIckL6pQCd5wwapd9MplF9lBmsrD7wsvKloasuZPdZOKIjayRJ4wxXSYvFAPQs4o3_6HlbN3XwTLmwPJTPdaqjA4q5jeMICYp8B-hMjX0A7OalIt6lKec_t7eS6DNWhy_-Lnm-GQtqgst6o63W7zePPV96eBnmvhjkbF6CzfALLXo1GmkO0L0hudYFvEBnDknMr2v67CNklI3U7g3ujL2fyDR"/>
+</div>
+</div>
+</header>
+<!-- Task Content Canvas -->
+<div class="p-8 max-w-7xl mx-auto">
+<!-- Page Header / Hero Branding -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+<div>
+<h1 class="text-[1.75rem] font-semibold text-slate-900 tracking-tight leading-tight">Project Tasks</h1>
+<p class="text-slate-500 text-sm mt-1">Manage, track and assign enterprise-level operational tasks.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border-none rounded-lg pl-4 pr-10 py-2.5 text-sm font-medium text-slate-700 focus:ring-2 focus:ring-primary/20 cursor-pointer">
+<option>All Status</option>
+<option>Todo</option>
+<option>In Progress</option>
+<option>Done</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                        Create Task
+                    </button>
+</div>
+</div>
+<!-- Task Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_24px_-2px_rgba(19,27,46,0.06)] overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 text-[0.6875rem] font-bold text-slate-500 uppercase tracking-wider">Title</th>
+<th class="px-6 py-4 text-[0.6875rem] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-[0.6875rem] font-bold text-slate-500 uppercase tracking-wider">Priority</th>
+<th class="px-6 py-4 text-[0.6875rem] font-bold text-slate-500 uppercase tracking-wider">Deadline</th>
+<th class="px-6 py-4 text-[0.6875rem] font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Task Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900">Implement authentication middleware</span>
+<span class="text-xs text-slate-400 mt-0.5">Development ⋅ Auth System</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide">In Progress</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-orange-500 text-lg" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="text-sm">High</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600">Oct 24, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Task Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900">UI Redesign - Main Dashboard</span>
+<span class="text-xs text-slate-400 mt-0.5">Design ⋅ Core Product</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 uppercase tracking-wide">Todo</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="signal_cellular_alt_2_bar">signal_cellular_alt_2_bar</span>
+<span class="text-sm">Medium</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600">Oct 28, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Task Row 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900">Quarterly Security Audit</span>
+<span class="text-xs text-slate-400 mt-0.5">Operations ⋅ Infrastructure</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-wide">Done</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-error text-lg" data-icon="priority_high">priority_high</span>
+<span class="text-sm">Critical</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-400 line-through">Oct 15, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Task Row 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900">API Documentation Update</span>
+<span class="text-xs text-slate-400 mt-0.5">Engineering ⋅ Documentation</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide">In Progress</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="signal_cellular_alt_1_bar">signal_cellular_alt_1_bar</span>
+<span class="text-sm">Low</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600">Nov 02, 2023</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="edit">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Pagination/Footer -->
+<div class="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-t border-slate-100">
+<span class="text-xs text-slate-500">Showing 4 of 24 tasks</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-100 text-slate-400 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded-lg bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="px-3 py-1 rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-medium">2</button>
+<button class="px-3 py-1 rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-medium">3</button>
+<button class="p-2 rounded-lg hover:bg-slate-100 text-slate-400">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Bento-style Quick Actions -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-primary/5 p-6 rounded-xl flex flex-col gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900">AI Priority Sweep</h3>
+<p class="text-xs text-slate-500 leading-relaxed">Let our intelligence engine suggest priority changes based on upcoming deadlines.</p>
+<button class="mt-2 text-primary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        Run Sweep <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-700">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900">Bulk Reassign</h3>
+<p class="text-xs text-slate-500 leading-relaxed">Move all "Todo" tasks to a new team member or department instantly.</p>
+<button class="mt-2 text-slate-700 text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        Select Member <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="bg-tertiary/5 p-6 rounded-xl flex flex-col gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900">Review Activity</h3>
+<p class="text-xs text-slate-500 leading-relaxed">See recent changes made to task statuses and ownership in the last 24h.</p>
+<button class="mt-2 text-tertiary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                        View Audit Log <span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

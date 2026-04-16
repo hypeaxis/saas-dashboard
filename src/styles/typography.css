@@ -1,47 +1,85 @@
-/* Typography styles: element defaults and special text classes */
+/* Editorial typography scale for TaskMaster */
 
 @layer base {
     h1 {
-        @apply font-bold leading-tight tracking-tight mobile:text-3xl tablet:text-4xl desktop:text-5xl;
+        font-size: 3.5rem;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.02em;
     }
+
     h2 {
-        @apply font-semibold leading-tight tracking-tight mobile:text-2xl tablet:text-3xl desktop:text-4xl;
+        font-size: 1.75rem;
+        line-height: 1.15;
+        font-weight: 600;
+        letter-spacing: -0.015em;
     }
+
     h3 {
-        @apply font-semibold leading-snug tracking-tight mobile:text-xl tablet:text-2xl desktop:text-3xl;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-weight: 500;
     }
+
     h4 {
-        @apply font-medium leading-snug tracking-tight mobile:text-lg tablet:text-xl desktop:text-2xl;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-weight: 500;
     }
+
     h5 {
-        @apply font-medium leading-normal tracking-tight mobile:text-base tablet:text-lg desktop:text-xl;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        font-weight: 400;
     }
+
     h6 {
-        @apply font-medium uppercase tracking-wide mobile:text-sm tablet:text-base desktop:text-lg;
+        font-size: 0.6875rem;
+        line-height: 1.4;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
+
     p {
-        @apply text-base leading-7;
+        font-size: 0.875rem;
+        line-height: 1.75;
+        font-weight: 400;
     }
 }
 
 @layer components {
-    /* Special text helpers */
-    .lead {
-        @apply text-lg tablet:text-xl text-muted-foreground;
+    .display-lg {
+        font-size: 3.5rem;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.02em;
     }
-    .muted {
-        @apply text-muted-foreground;
+
+    .headline-md {
+        font-size: 1.75rem;
+        line-height: 1.15;
+        font-weight: 600;
+        letter-spacing: -0.015em;
     }
-    .caption {
-        @apply text-xs text-muted-foreground;
+
+    .title-sm {
+        font-size: 1rem;
+        line-height: 1.5;
+        font-weight: 500;
     }
-    .overline {
-        @apply uppercase tracking-wider text-[0.7rem] text-muted-foreground;
+
+    .body-md {
+        font-size: 0.875rem;
+        line-height: 1.75;
+        font-weight: 400;
     }
-    .blockquote {
-        @apply border-l-4 border-border pl-4 italic text-muted-foreground;
-    }
-    .code {
-        @apply font-mono text-sm bg-muted/50 px-1.5 py-0.5 rounded;
+
+    .label-sm {
+        font-size: 0.6875rem;
+        line-height: 1.4;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 }
