@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -24,7 +24,7 @@ type TaskFormValues = z.infer<typeof taskSchema>;
 export default function TaskModal() {
     const [modalState, setModalState] = useAtom(taskModalAtom);
     const [tasks, setTasks] = useAtom(tasksAtom);
-    const [activities, setActivities] = useAtom(activitiesAtom);
+    const setActivities = useSetAtom(activitiesAtom);
 
     // Tìm task đang edit (nếu có)
     const editingTask = tasks.find((t) => t.id === modalState.editingTaskId);

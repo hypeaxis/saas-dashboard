@@ -8,11 +8,7 @@ import {
     Trash, 
     SignalHigh, 
     SignalMedium, 
-    SignalLow,
-    Zap,
-    Users,
-    History,
-    ArrowRight
+    SignalLow
 } from "lucide-react";
 import { 
     filteredTasksAtom, 

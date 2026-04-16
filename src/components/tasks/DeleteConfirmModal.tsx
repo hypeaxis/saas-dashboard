@@ -1,6 +1,6 @@
 "use client";
 
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { AlertTriangle, X } from "lucide-react";
 import { Button } from "src/components/ui/button";
 import { activitiesAtom, deleteConfirmAtom, tasksAtom } from "src/store/tasks";
@@ -9,7 +9,7 @@ import type { Activity } from "src/types/task";
 export default function DeleteConfirmModal() {
     const [deleteState, setDeleteState] = useAtom(deleteConfirmAtom);
     const [tasks, setTasks] = useAtom(tasksAtom);
-    const [activities, setActivities] = useAtom(activitiesAtom);
+    const setActivities = useSetAtom(activitiesAtom);
 
     const taskToDelete = tasks.find((task) => task.id === deleteState.taskId);
 
