@@ -25,33 +25,6 @@ export const filteredTasksAtom = atom((get) => {
     });
 });
 
-export type PriorityCount = Record<Priority, number>;
-
-export const priorityCountsAtom = atom<PriorityCount>((get) => {
-    const tasks = get(tasksAtom);
-
-    return tasks.reduce<PriorityCount>(
-        (acc, task) => {
-            acc[task.priority] += 1;
-            return acc;
-        },
-        { low: 0, medium: 0, high: 0 }
-    );
-});
-
-export const completionRateAtom = atom<number>((get) => {
-    const tasks = get(tasksAtom);
-
-    if (tasks.length === 0) {
-        return 0;
-    }
-
-    const completed = tasks.filter((task) => task.status === "done").length;
-    const rate = (completed / tasks.length) * 100;
-
-    return Math.round(rate * 100) / 100;
-});
-
 export type TaskModalState = {
     isOpen: boolean;
     editingTaskId: string | null;
@@ -70,4 +43,45 @@ export type DeleteConfirmState = {
 export const deleteConfirmAtom = atom<DeleteConfirmState>({
     isOpen: false,
     taskId: null,
+});
+
+export type PriorityCount = Record<Priority, number>;
+
+export type StatusCount = Record<Status, number>;
+
+export const priorityCountsAtom = atom<PriorityCount>((get) => {
+    const tasks = get(tasksAtom);
+
+    return tasks.reduce<PriorityCount>(
+        (acc, task) => {
+            acc[task.priority] += 1;
+            return acc;
+        },
+        { low: 0, medium: 0, high: 0 }
+    );
+});
+
+export const statusCountsAtom = atom<StatusCount>((get) => {
+    const tasks = get(tasksAtom);
+
+    return tasks.reduce<StatusCount>(
+        (acc, task) => {
+            acc[task.status] += 1;
+            return acc;
+        },
+        { todo: 0, doing: 0, done: 0 }
+    );
+});
+
+export const completionRateAtom = atom<number>((get) => {
+    const tasks = get(tasksAtom);
+
+    if (tasks.length === 0) {
+        return 0;
+    }
+
+    const completed = tasks.filter((task) => task.status === "done").length;
+    const rate = (completed / tasks.length) * 100;
+
+    return Math.round(rate * 100) / 100;
 });
