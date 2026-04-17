@@ -8,8 +8,7 @@ import {
     filterAtom, 
     deleteConfirmAtom,
     taskModalAtom,
-    taskDetailAtom,
-    type TaskFilter 
+    taskDetailAtom
 } from "src/store/tasks";
 import DeleteConfirmModal from "src/components/tasks/DeleteConfirmModal";
 import TaskDetailModal from "src/components/tasks/TaskDetailModal";

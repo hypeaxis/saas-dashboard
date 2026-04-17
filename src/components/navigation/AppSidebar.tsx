@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ChartSpline, LayoutGrid, ListTodo } from "lucide-react";
 import { cn } from "src/lib/utils";
 import { signOut } from "next-auth/react";
-import { LogOut, Plus, X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
 import { Button } from "src/components/ui/button";
 import { sidebarOpenAtom } from "src/store/tasks";
 import { useAtom } from "jotai";
