@@ -1,5 +1,6 @@
 "use client";
 
+import { useState,useEffect, use } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { Search, Plus, Eye, Edit2, Trash } from "lucide-react";
 import { 
@@ -25,6 +26,18 @@ export default function TasksPage() {
     const [modalState, setModalState] = useAtom(taskModalAtom);
     const [deleteState, setDeleteState] = useAtom(deleteConfirmAtom);
     const [, setDetailState] = useAtom(taskDetailAtom);
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const ITEMS_PER_PAGE = 10;
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, filter]);
+
+    const totalPages = Math.ceil(tasks.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+
+    const paginatedTasks = tasks.slice(startIndex, endIndex);
 
     const handleCreateTask = () => {
         setModalState({ isOpen: true, editingTaskId: null });
@@ -44,7 +57,7 @@ export default function TasksPage() {
 
     return (
         <>
-            <div className={cn("space-y-8 max-w-[1280px] transition-all duration-200", (modalState.isOpen || deleteState.isOpen) && "blur-[2px]") }>
+            <div className={cn("space-y-8 w-full transition-all duration-200", (modalState.isOpen || deleteState.isOpen) && "blur-[2px]") }>
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h1 className="headline-md tracking-tight text-foreground">Project Tasks</h1>
@@ -94,27 +107,28 @@ export default function TasksPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border/40">
-                            {tasks.map((task) => (
+                            {paginatedTasks.map((task) => (
                                 <tr key={task.id} className="hover:bg-surface-container-low/50 transition-colors group">
-                                    <td className="px-6 py-5">
-                                        <div className="flex flex-col">
+                                    <td className="px-6 py-3 align-middle">
+                                        <div className="flex items-center">
                                             <span className={cn("text-sm font-medium text-foreground", task.status === "done" && "line-through opacity-70")}>
                                                 {task.title}
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-5">
+
+                                    <td className="px-6 py-3 align-middle">
                                         <StatusBadge status={task.status} />
                                     </td>
-                                    <td className="px-6 py-5">
+                                    <td className="px-6 py-3 align-middle">
                                         <PriorityBadge priority={task.priority} />
                                     </td>
-                                    <td className="px-6 py-5">
+                                    <td className="px-6 py-3 align-middle">
                                         <span className={cn("text-sm", task.status === "done" ? "text-muted-foreground/50 line-through" : "text-muted-foreground")}>
                                             {formatTaskDate(task.deadline)}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-5 text-right">
+                                    <td className="px-6 py-3 text-right align-middle">
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 type="button"
@@ -137,7 +151,7 @@ export default function TasksPage() {
                                     </td>
                                 </tr>
                             ))}
-                            {tasks.length === 0 && (
+                            {paginatedTasks.length === 0 && (
                                 <tr>
                                     <td colSpan={5} className="px-6 py-12 text-center text-sm text-muted-foreground">
                                         <div className="flex flex-col items-center gap-2">
@@ -152,10 +166,32 @@ export default function TasksPage() {
                 </div>
 
                 <div className="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-t border-border/40">
-                    <span className="text-xs text-muted-foreground">Showing {tasks.length} tasks</span>
+                    <span className="text-xs text-muted-foreground">
+                        Showing {tasks.length > 0 ? startIndex + 1 : 0} to {Math.min(endIndex, tasks.length)} of {tasks.length} tasks
+                    </span>
                     <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm" disabled className="text-xs font-medium">Previous</Button>
-                        <Button variant="ghost" size="sm" disabled className="text-xs font-medium">Next</Button>
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            disabled={currentPage === 1} 
+                            onClick={() => setCurrentPage((prev) => prev - 1)}
+                            className="text-xs font-medium"
+                        >
+                            Previous
+                        </Button>
+                        
+                        {/* Tùy chọn: Hiển thị số trang hiện tại */}
+                        <span className="text-xs font-medium px-2">Page {currentPage} of {totalPages || 1}</span>
+
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            disabled={currentPage >= totalPages || totalPages === 0} 
+                            onClick={() => setCurrentPage((prev) => prev + 1)}
+                            className="text-xs font-medium"
+                        >
+                            Next
+                        </Button>
                     </div>
                 </div>
             </div>

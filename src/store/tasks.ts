@@ -25,6 +25,8 @@ export const filteredTasksAtom = atom((get) => {
     });
 });
 
+export const sidebarOpenAtom = atom<boolean>(false);
+
 export type TaskModalState = {
     isOpen: boolean;
     editingTaskId: string | null;

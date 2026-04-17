@@ -34,7 +34,7 @@ export default function DashboardPage() {
     const setHistoryModal = useSetAtom(activityHistoryAtom);
 
     return (
-        <div className="space-y-8 max-w-[1280px]">
+        <div className="w-full space-y-8 ">
             <div>
                 <p className="label-sm text-tertiary">Overview</p>
                 <h1 className="headline-md mt-1">Dashboard</h1>

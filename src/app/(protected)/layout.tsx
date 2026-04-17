@@ -6,6 +6,7 @@ import AppSidebar from "src/components/navigation/AppSidebar";
 import AppTopbar from "src/components/navigation/AppTopbar";
 import TaskModal from "src/components/tasks/TaskModal";
 
+
 export default async function ProtectedLayout({ children }: { children: ReactNode }) {
     const session = await getServerSession(authOptions);
 
@@ -14,15 +15,15 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     }
 
     return (
-        <div className="min-h-screen bg-surface text-foreground">
-            <div className="mx-auto grid min-h-screen w-full max-w-7xl gap-4 px-4 py-4 md:grid-cols-[220px_1fr] md:px-6 lg:px-8">
-                <AppSidebar />
+        <div className="min-h-screen bg-white text-foreground flex">
+            <AppSidebar />
 
-                <div className="surface-panel flex min-h-0 flex-col p-4 md:p-5">
-                    <AppTopbar email={session.user?.email} />
+            <div className="flex flex-col flex-1 min-w-0 bg-white">
+                <AppTopbar user={{ name: session.user?.name, email: session.user?.email }} />
 
-                    <main className="min-h-0 flex-1 overflow-auto rounded-md bg-surface-container-lowest p-4 md:p-5">{children}</main>
-                </div>
+                <main className="flex-1 overflow-auto p-6 md:p-8">
+                    {children}
+                </main>
             </div>
 
             <TaskModal />
