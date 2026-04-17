@@ -1,5 +1,3 @@
-/* Component surface utilities for TaskMaster */
-
 @layer components {
     .surface-card {
         background: var(--surface-container-lowest);

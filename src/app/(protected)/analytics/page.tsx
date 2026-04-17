@@ -105,26 +105,9 @@ export default function AnalyticsPage() {
         };
     }, [statusCounts]);
 
-    //  Empty State
-    //   if (tasks.length === 0) {
-    //     return (
-    //       <div className="flex h-[60vh] flex-col items-center justify-center space-y-4 text-center">
-    //         <div className="rounded-full bg-muted p-6">
-    //           <svg className="h-10 w-10 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-    //           </svg>
-    //         </div>
-    //         <h2 className="text-xl font-semibold">No analysis data available</h2>
-    //         <p className="text-muted-foreground text-sm max-w-sm">
-    //           Create some tasks in the Task List to see analytics.
-    //         </p>
-    //       </div>
-    //     );
-    //   }
-
     return (
         <div className="space-y-8">
-        {/* Header */}
+
         <div>
             <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
             <p className="text-muted-foreground mt-2 text-sm">
@@ -132,7 +115,6 @@ export default function AnalyticsPage() {
             </p>
         </div>
 
-        {/* KPI Cards */}
         <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
             <h3 className="text-sm font-medium text-muted-foreground">Total</h3>
@@ -152,9 +134,8 @@ export default function AnalyticsPage() {
             </div>
         </div>
 
-        {/* Charts Grid */}
         <div className="grid gap-6 md:grid-cols-2">
-            {/* Priority Donut Chart */}
+
             <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
             <h3 className="mb-4 text-base font-semibold">Priority Distribution</h3>
             <div className="flex flex-1 items-center justify-center overflow-hidden">
@@ -162,7 +143,6 @@ export default function AnalyticsPage() {
             </div>
             </div>
 
-            {/* Status Column Chart */}
             <div className="flex min-h-[380px] flex-col rounded-xl border border-border bg-card p-6 shadow-sm">
             <h3 className="mb-4 text-base font-semibold">Task Status</h3>
             <div className="flex flex-1 items-center justify-center overflow-hidden">

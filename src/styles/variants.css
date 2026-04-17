@@ -1,2 +1,1 @@
-/* Dark mode variant: use with `dark:` prefix and toggle by adding `.dark` to <html> or <body> */
 @custom-variant dark (&:is(.dark *));

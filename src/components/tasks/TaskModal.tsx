@@ -17,7 +17,10 @@ const taskSchema = z.object({
     description: z.string().optional(),
     status: z.enum(TASK_STATUS_VALUES),
     priority: z.enum(TASK_PRIORITY_VALUES),
-    deadline: z.string().optional(),
+    deadline: z.string().optional().refine(val => {
+        if (!val) return true;
+        return !isNaN(Date.parse(val));
+    }, "Invalid date format."),
 });
 
 type TaskFormValues = z.infer<typeof taskSchema>;
@@ -35,7 +38,6 @@ export default function TaskModal() {
     const [tasks, setTasks] = useAtom(tasksAtom);
     const setActivities = useSetAtom(activitiesAtom);
 
-    // Tìm task đang edit (nếu có)
     const editingTask = tasks.find((t) => t.id === modalState.editingTaskId);
     const isEditMode = !!editingTask;
 
@@ -110,9 +112,7 @@ export default function TaskModal() {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 backdrop-blur-sm p-4">
-            {/* Modal Container */}
             <div className="w-full max-w-lg rounded-xl bg-surface-container-lowest shadow-[0px_24px_48px_-12px_rgba(0,0,0,0.15)] overflow-hidden border border-border/20">
-                {/* Header */}
                 <div className="p-6 border-b border-border/40 flex justify-between items-center">
                     <h2 className="headline-md font-semibold tracking-tight text-foreground">
                         {isEditMode ? "Edit Task" : "Create New Task"}
@@ -125,9 +125,7 @@ export default function TaskModal() {
                     </button>
                 </div>
 
-                {/* Form Body */}
                 <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
-                    {/* Title */}
                     <div className="space-y-2">
                         <label className="label-sm text-muted-foreground">Task Title *</label>
                         <input
@@ -139,7 +137,6 @@ export default function TaskModal() {
                         {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
                     </div>
 
-                    {/* Description */}
                     <div className="space-y-2">
                         <label className="label-sm text-muted-foreground">Description</label>
                         <textarea
@@ -150,7 +147,6 @@ export default function TaskModal() {
                         />
                     </div>
 
-                    {/* Status & Priority Row */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <label className="label-sm text-muted-foreground">Status</label>
@@ -177,7 +173,6 @@ export default function TaskModal() {
                         </div>
                     </div>
 
-                    {/* Deadline Picker */}
                     <div className="space-y-2">
                         <label className="label-sm text-muted-foreground">Deadline</label>
                         <input
@@ -187,7 +182,6 @@ export default function TaskModal() {
                         />
                     </div>
 
-                    {/* Actions */}
                     <div className="pt-4 flex justify-end gap-3 border-t border-border/40 mt-6">
                         <Button type="button" variant="ghost" onClick={closeModal}>
                             Cancel

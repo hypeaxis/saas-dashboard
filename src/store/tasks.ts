@@ -55,6 +55,16 @@ export const deleteConfirmAtom = atom<DeleteConfirmState>({
     taskId: null,
 });
 
+export type ActivityHistoryState = {
+    isOpen: boolean;
+    taskId: string | null;
+};
+
+export const activityHistoryAtom = atom<ActivityHistoryState>({
+    isOpen: false,
+    taskId: null,
+});
+
 export type PriorityCount = Record<Priority, number>;
 
 export type StatusCount = Record<Status, number>;

@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Split CSS configuration */
 @import "../styles/variants.css";
 @import "../styles/theme.css";
 @import "../styles/variables.light.css";

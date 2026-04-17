@@ -1,7 +1,6 @@
 import { Task, Activity } from "src/types/task";
 
 export const seedTasks: Task[] = [
-  // --- Giai đoạn 1: Khởi tạo & Cấu hình (Đã xong trong Tháng 3/2026) ---
   {
     id: "task-01",
     title: "Thiết lập dự án Next.js và TailwindCSS",
@@ -33,14 +32,13 @@ export const seedTasks: Task[] = [
     updatedAt: "2026-04-02T17:00:00.000Z",
   },
 
-  // --- Giai đoạn 2: Phát triển UI/UX Core (Đang làm trong Tháng 4/2026) ---
   {
     id: "task-04",
     title: "Xây dựng giao diện Trang chủ (Homepage)",
     description: "Code UI cho Hero banner, danh sách sản phẩm nổi bật và các danh mục chính.",
     status: "doing",
     priority: "medium",
-    deadline: "2026-04-25", // Còn hạn
+    deadline: "2026-04-25", 
     createdAt: "2026-04-05T14:00:00.000Z",
     updatedAt: "2026-04-10T09:00:00.000Z",
   },
@@ -50,7 +48,7 @@ export const seedTasks: Task[] = [
     description: "Viết GET API /api/products có hỗ trợ pagination (phân trang) và filtering.",
     status: "doing",
     priority: "high",
-    deadline: "2026-04-14", // Cố ý để Overdue (hôm nay là 16/4) để test UI
+    deadline: "2026-04-14",
     createdAt: "2026-04-06T08:00:00.000Z",
     updatedAt: "2026-04-12T10:15:00.000Z",
   },
@@ -60,7 +58,7 @@ export const seedTasks: Task[] = [
     description: "Thiết kế thẻ hiển thị sản phẩm tái sử dụng được (gồm ảnh, tên, giá, nút Add to Cart).",
     status: "doing",
     priority: "medium",
-    deadline: "2026-04-20", // Còn hạn
+    deadline: "2026-04-20",
     createdAt: "2026-04-08T13:00:00.000Z",
     updatedAt: "2026-04-13T09:20:00.000Z",
   },
@@ -70,12 +68,12 @@ export const seedTasks: Task[] = [
     description: "Thanh menu Header bị vỡ layout trên màn hình iPhone SE, cần fix gấp.",
     status: "doing",
     priority: "high",
-    deadline: "2026-04-18", // Sắp đến hạn
+    deadline: "2026-04-18", 
     createdAt: "2026-04-14T10:00:00.000Z",
     updatedAt: "2026-04-15T10:30:00.000Z",
   },
 
-  // --- Giai đoạn 3: Giỏ hàng & Thanh toán (Sắp làm trong Tháng 5/2026) ---
+
   {
     id: "task-08",
     title: "Quản lý state Giỏ hàng (Zustand/Jotai)",
@@ -127,7 +125,6 @@ export const seedTasks: Task[] = [
     updatedAt: "2026-04-16T11:20:00.000Z",
   },
 
-  // --- Giai đoạn 4: Tính năng mở rộng & Admin ---
   {
     id: "task-13",
     title: "Gửi Email xác nhận đơn hàng",
@@ -169,7 +166,6 @@ export const seedTasks: Task[] = [
     updatedAt: "2026-04-16T11:40:00.000Z",
   },
 
-  // --- Giai đoạn 5: Polish, Test & Deploy ---
   {
     id: "task-17",
     title: "Tối ưu hóa SEO & Meta Tags",
@@ -217,21 +213,191 @@ export const seedActivities: Activity[] = [
     id: "act-01",
     type: "create",
     taskId: "task-01",
-    message: "Đã tạo task 'Thiết lập dự án Next.js...'",
+    message: "Đã tạo task 'Thiết lập dự án Next.js và TailwindCSS'",
     createdAt: "2026-03-15T08:00:00.000Z",
   },
   {
     id: "act-02",
-    type: "update",
-    taskId: "task-01",
-    message: "Đã hoàn thành 'Thiết lập dự án Next.js...'",
-    createdAt: "2026-03-20T10:00:00.000Z",
+    type: "create",
+    taskId: "task-02",
+    message: "Đã tạo task 'Thiết kế Database Schema'",
+    createdAt: "2026-03-16T09:00:00.000Z",
   },
   {
     id: "act-03",
     type: "update",
+    taskId: "task-01",
+    message: "Đã hoàn thành 'Thiết lập dự án Next.js và TailwindCSS'",
+    createdAt: "2026-03-20T10:00:00.000Z",
+  },
+  {
+    id: "act-04",
+    type: "update",
+    taskId: "task-02",
+    message: "Đã hoàn thành 'Thiết kế Database Schema'",
+    createdAt: "2026-03-24T15:30:00.000Z",
+  },
+  {
+    id: "act-05",
+    type: "create",
+    taskId: "task-03",
+    message: "Đã tạo task 'Tích hợp NextAuth đăng nhập'",
+    createdAt: "2026-03-25T08:30:00.000Z",
+  },
+  {
+    id: "act-06",
+    type: "update",
+    taskId: "task-03",
+    message: "Đã hoàn thành 'Tích hợp NextAuth đăng nhập'",
+    createdAt: "2026-04-02T17:00:00.000Z",
+  },
+
+  {
+    id: "act-07",
+    type: "create",
+    taskId: "task-04",
+    message: "Đã tạo task 'Xây dựng giao diện Trang chủ (Homepage)'",
+    createdAt: "2026-04-05T14:00:00.000Z",
+  },
+  {
+    id: "act-08",
+    type: "create",
+    taskId: "task-05",
+    message: "Đã tạo task 'Phát triển API lấy danh sách Sản phẩm'",
+    createdAt: "2026-04-06T08:00:00.000Z",
+  },
+  {
+    id: "act-09",
+    type: "create",
+    taskId: "task-06",
+    message: "Đã tạo task 'Component Product Card'",
+    createdAt: "2026-04-08T13:00:00.000Z",
+  },
+  {
+    id: "act-10",
+    type: "update",
+    taskId: "task-04",
+    message: "Đã bắt đầu làm 'Xây dựng giao diện Trang chủ (Homepage)'",
+    createdAt: "2026-04-10T09:00:00.000Z",
+  },
+  {
+    id: "act-11",
+    type: "update",
+    taskId: "task-05",
+    message: "Đã cập nhật trạng thái 'Phát triển API lấy danh sách Sản phẩm' sang In Progress",
+    createdAt: "2026-04-12T10:15:00.000Z",
+  },
+  {
+    id: "act-12",
+    type: "update",
+    taskId: "task-06",
+    message: "Đã bắt đầu làm 'Component Product Card'",
+    createdAt: "2026-04-13T09:20:00.000Z",
+  },
+  {
+    id: "act-13",
+    type: "create",
     taskId: "task-07",
-    message: "Đã cập nhật trạng thái 'Fix bug Responsive' sang Đang làm",
+    message: "Đã tạo task 'Fix bug Responsive trên Mobile'",
+    createdAt: "2026-04-14T10:00:00.000Z",
+  },
+  {
+    id: "act-14",
+    type: "update",
+    taskId: "task-07",
+    message: "Đang tiến hành 'Fix bug Responsive trên Mobile'",
     createdAt: "2026-04-15T10:30:00.000Z",
+  },
+
+  {
+    id: "act-15",
+    type: "create",
+    taskId: "task-08",
+    message: "Đã tạo task 'Quản lý state Giỏ hàng (Zustand/Jotai)'",
+    createdAt: "2026-04-16T11:00:00.000Z",
+  },
+  {
+    id: "act-16",
+    type: "create",
+    taskId: "task-09",
+    message: "Đã tạo task 'Chức năng Lọc và Tìm kiếm sản phẩm'",
+    createdAt: "2026-04-16T11:05:00.000Z",
+  },
+  {
+    id: "act-17",
+    type: "create",
+    taskId: "task-10",
+    message: "Đã tạo task 'Thiết kế UI Trang chi tiết sản phẩm'",
+    createdAt: "2026-04-16T11:10:00.000Z",
+  },
+  {
+    id: "act-18",
+    type: "create",
+    taskId: "task-11",
+    message: "Đã tạo task 'Tích hợp cổng thanh toán (Stripe/VNPay)'",
+    createdAt: "2026-04-16T11:15:00.000Z",
+  },
+  {
+    id: "act-19",
+    type: "create",
+    taskId: "task-12",
+    message: "Đã tạo task 'API xử lý Order & lưu Database'",
+    createdAt: "2026-04-16T11:20:00.000Z",
+  },
+  {
+    id: "act-20",
+    type: "create",
+    taskId: "task-13",
+    message: "Đã tạo task 'Gửi Email xác nhận đơn hàng'",
+    createdAt: "2026-04-16T11:25:00.000Z",
+  },
+  {
+    id: "act-21",
+    type: "create",
+    taskId: "task-14",
+    message: "Đã tạo task 'Xây dựng Admin Dashboard quản lý'",
+    createdAt: "2026-04-16T11:30:00.000Z",
+  },
+  {
+    id: "act-22",
+    type: "create",
+    taskId: "task-15",
+    message: "Đã tạo task 'Trang User Profile & Lịch sử mua hàng'",
+    createdAt: "2026-04-16T11:35:00.000Z",
+  },
+  {
+    id: "act-23",
+    type: "create",
+    taskId: "task-16",
+    message: "Đã tạo task 'Hệ thống đánh giá và Bình luận'",
+    createdAt: "2026-04-16T11:40:00.000Z",
+  },
+  {
+    id: "act-24",
+    type: "create",
+    taskId: "task-17",
+    message: "Đã tạo task 'Tối ưu hóa SEO & Meta Tags'",
+    createdAt: "2026-04-16T11:45:00.000Z",
+  },
+  {
+    id: "act-25",
+    type: "create",
+    taskId: "task-18",
+    message: "Đã tạo task 'Viết Unit Test cho Giỏ hàng'",
+    createdAt: "2026-04-16T11:50:00.000Z",
+  },
+  {
+    id: "act-26",
+    type: "create",
+    taskId: "task-19",
+    message: "Đã tạo task 'Tối ưu hiệu năng Image'",
+    createdAt: "2026-04-16T11:55:00.000Z",
+  },
+  {
+    id: "act-27",
+    type: "create",
+    taskId: "task-20",
+    message: "Đã tạo task 'Setup CI/CD Vercel & GitHub Actions'",
+    createdAt: "2026-04-16T12:00:00.000Z",
   }
 ];

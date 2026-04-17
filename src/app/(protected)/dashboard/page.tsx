@@ -3,19 +3,18 @@
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { ListTodo, Clock, CheckCircle2, AlertTriangle, Edit2, PlusCircle, Trash } from "lucide-react";
-
-import { activitiesAtom, tasksAtom } from "src/store/tasks";
+import { useSetAtom } from "jotai";
+import { activitiesAtom, activityHistoryAtom, tasksAtom } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
 import { cn } from "src/lib/utils";
 import { PriorityBadge, StatusBadge } from "src/components/tasks/TaskBadges";
 import { formatTaskDate } from "src/lib/task";
+import ActivityHistoryModal from "src/components/tasks/ActivityHistoryModal";
 
 export default function DashboardPage() {
-    // Đọc dữ liệu tasks từ Jotai
     const tasks = useAtomValue(tasksAtom);
     const activities = useAtomValue(activitiesAtom);
 
-    // Tính toán các chỉ số KPI
     const total = tasks.length;
     const doing = tasks.filter((t) => t.status === "doing").length;
     const done = tasks.filter((t) => t.status === "done").length;
@@ -24,20 +23,23 @@ export default function DashboardPage() {
         return new Date(t.deadline).getTime() < new Date().getTime();
     }).length;
 
-    // Lấy 4 task mới nhất
     const recentTasks = [...tasks]
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 4);
 
+    const recentActivities = [...activities]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 4);
+
+    const setHistoryModal = useSetAtom(activityHistoryAtom);
+
     return (
         <div className="space-y-8 max-w-[1280px]">
-            {/* Header */}
             <div>
                 <p className="label-sm text-tertiary">Overview</p>
                 <h1 className="headline-md mt-1">Dashboard</h1>
             </div>
 
-            {/* KPI Cards (Bento Grid) */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="surface-card p-6 hover:-translate-y-0.5 transition-transform">
                     <div className="flex justify-between items-start mb-4">
@@ -81,7 +83,6 @@ export default function DashboardPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Recent Tasks Table */}
                 <div className="lg:col-span-8 surface-card flex flex-col overflow-hidden">
                     <div className="p-6 flex justify-between items-center border-b border-border/40">
                         <h3 className="title-sm font-semibold">Recent Tasks</h3>
@@ -135,12 +136,11 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                {/* Activity Feed */}
                 <div className="lg:col-span-4 surface-card p-6 flex flex-col">
                     <h3 className="title-sm font-semibold mb-6">Activity Feed</h3>
                     
                     <div className="space-y-6 relative before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-px before:bg-border/50 flex-1">
-                        {activities.map((activity) => (
+                        {recentActivities.map((activity) => (
                             <div key={activity.id} className="relative flex gap-4">
                                 <div className={cn(
                                     "w-7 h-7 rounded-full flex items-center justify-center text-white ring-4 ring-card z-10 shrink-0",
@@ -161,10 +161,14 @@ export default function DashboardPage() {
                             </div>
                         ))}
                     </div>
-
-                    <Button variant="outline" className="w-full mt-8 bg-surface-container-low hover:bg-surface-container-high border-none">
+                    <Button 
+                        onClick={() => setHistoryModal({isOpen: true, taskId: null})}
+                        variant="outline" 
+                        className="w-full mt-8 bg-surface-container-low hover:bg-surface-container-high border-none"
+                    >
                         View Full History
                     </Button>
+                    <ActivityHistoryModal />
                 </div>
             </div>
         </div>

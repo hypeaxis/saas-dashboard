@@ -6,6 +6,8 @@ import JotaiProvider from 'src/components/jotai-provider/JotaiProvider';
 import AuthSessionProvider from 'src/components/auth/AuthSessionProvider';
 import { KEYWORD, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, THUMBNAIL } from 'src/constant/metadata';
 
+import TaskModal from 'src/components/tasks/TaskModal';
+
 const inter = Inter({
     subsets: ['latin'],
     variable: '--font-inter',

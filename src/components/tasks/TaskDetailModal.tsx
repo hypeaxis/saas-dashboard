@@ -30,7 +30,6 @@ export default function TaskDetailModal() {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 backdrop-blur-sm p-4">
             <div className="w-full max-w-2xl rounded-xl bg-surface-container-lowest shadow-2xl overflow-hidden border border-border/20">
-                {/* Header */}
                 <div className="p-6 border-b border-border/40 flex justify-between items-start gap-4 bg-surface-container-low/30">
                     <div>
                         <h2 className="headline-md font-semibold tracking-tight text-foreground">
@@ -50,9 +49,7 @@ export default function TaskDetailModal() {
                     </button>
                 </div>
 
-                {/* Body */}
                 <div className="p-6 space-y-6">
-                    {/* Status & Priority */}
                     <div className="flex flex-wrap gap-6">
                         <div className="space-y-1.5">
                             <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
@@ -68,7 +65,6 @@ export default function TaskDetailModal() {
                         </div>
                     </div>
 
-                    {/* Description */}
                     <div className="space-y-2">
                         <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                             <AlignLeft className="size-3.5" /> Description
@@ -78,7 +74,6 @@ export default function TaskDetailModal() {
                         </div>
                     </div>
 
-                    {/* Timestamps Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-lg bg-surface-container-low/50 border border-border/40">
                         <div className="space-y-1">
                             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -101,7 +96,6 @@ export default function TaskDetailModal() {
                     </div>
                 </div>
 
-                {/* Footer */}
                 <div className="p-6 pt-0 flex justify-end gap-3">
                     <Button type="button" variant="ghost" onClick={closeModal}>
                         Close

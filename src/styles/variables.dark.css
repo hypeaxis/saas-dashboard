@@ -1,5 +1,3 @@
-/* Dark mode CSS variables (activate by adding `.dark` on <html> or <body>) */
-
 .dark {
     --surface: #10131a;
     --surface-container-lowest: #171b24;

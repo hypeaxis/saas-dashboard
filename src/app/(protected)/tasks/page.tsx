@@ -19,7 +19,6 @@ import { PriorityBadge, StatusBadge } from "src/components/tasks/TaskBadges";
 import { formatTaskDate } from "src/lib/task";
 
 export default function TasksPage() {
-    // Kết nối State với Jotai
     const tasks = useAtomValue(filteredTasksAtom);
     const [search, setSearch] = useAtom(searchAtom);
     const [filter, setFilter] = useAtom(filterAtom);
@@ -46,7 +45,6 @@ export default function TasksPage() {
     return (
         <>
             <div className={cn("space-y-8 max-w-[1280px] transition-all duration-200", (modalState.isOpen || deleteState.isOpen) && "blur-[2px]") }>
-            {/* Header & Controls */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h1 className="headline-md tracking-tight text-foreground">Project Tasks</h1>
@@ -54,7 +52,6 @@ export default function TasksPage() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row items-center gap-3">
-                    {/* Search Input */}
                     <div className="relative w-full sm:w-64">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground size-4" />
                         <input 
@@ -66,7 +63,6 @@ export default function TasksPage() {
                         />
                     </div>
 
-                    {/* Filter Dropdown */}
                     <select 
                         value={filter}
                         onChange={(e) => setFilter(e.target.value as TaskFilter)}
@@ -85,7 +81,6 @@ export default function TasksPage() {
                 </div>
             </div>
 
-            {/* Task Table Container */}
             <div className="surface-card overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
@@ -155,8 +150,7 @@ export default function TasksPage() {
                         </tbody>
                     </table>
                 </div>
-                
-                {/* Table Footer */}
+
                 <div className="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-t border-border/40">
                     <span className="text-xs text-muted-foreground">Showing {tasks.length} tasks</span>
                     <div className="flex items-center gap-2">
