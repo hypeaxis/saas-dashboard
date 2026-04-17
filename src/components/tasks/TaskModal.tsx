@@ -4,26 +4,11 @@ import { useEffect } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { X } from "lucide-react";
 import { activitiesAtom, tasksAtom, taskModalAtom } from "src/store/tasks";
 import { Button } from "src/components/ui/button";
-import { createTaskActivity } from "src/lib/task";
-import { TASK_PRIORITY_VALUES, TASK_STATUS_VALUES } from "src/types/task";
-import type { Task } from "src/types/task";
-
-const taskSchema = z.object({
-    title: z.string().min(3, "Title must be at least 3 characters."),
-    description: z.string().optional(),
-    status: z.enum(TASK_STATUS_VALUES),
-    priority: z.enum(TASK_PRIORITY_VALUES),
-    deadline: z.string().optional().refine(val => {
-        if (!val) return true;
-        return !isNaN(Date.parse(val));
-    }, "Invalid date format."),
-});
-
-type TaskFormValues = z.infer<typeof taskSchema>;
+import { taskSchema, type TaskFormValues } from "src/lib/validations/task";
+import { createTask, updateTask } from "src/services/taskService";
 
 const EMPTY_TASK_FORM_VALUES = {
     title: "",
@@ -72,37 +57,16 @@ export default function TaskModal() {
     };
 
     const onSubmit = (values: TaskFormValues) => {
-        const now = new Date().toISOString();
-
         if (isEditMode && editingTask) {
-            const updatedTask = {
-                ...editingTask,
-                ...values,
-                updatedAt: now,
-            };
+            const { tasks: nextTasks, activities: nextActivities } = updateTask(tasks, [], editingTask.id, values);
 
-            setTasks((prev) =>
-                prev.map((t) =>
-                    t.id === editingTask.id ? updatedTask : t
-                )
-            );
-
-            setActivities((prev) => [createTaskActivity("update", updatedTask, now), ...prev]);
+            setTasks(nextTasks);
+            setActivities((prev) => [...nextActivities, ...prev]);
         } else {
-            const newTask: Task = {
-                id: `task-${Date.now()}`,
-                title: values.title,
-                description: values.description,
-                status: values.status,
-                priority: values.priority,
-                deadline: values.deadline,
-                createdAt: now,
-                updatedAt: now,
-            };
+            const { tasks: nextTasks, activities: nextActivities } = createTask(tasks, [], values);
 
-            setTasks((prev) => [newTask, ...prev]);
-
-            setActivities((prev) => [createTaskActivity("create", newTask, now), ...prev]);
+            setTasks(nextTasks);
+            setActivities((prev) => [...nextActivities, ...prev]);
         }
 
         closeModal();

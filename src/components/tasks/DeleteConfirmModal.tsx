@@ -4,7 +4,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { AlertTriangle, X } from "lucide-react";
 import { Button } from "src/components/ui/button";
 import { activitiesAtom, deleteConfirmAtom, tasksAtom } from "src/store/tasks";
-import { createTaskActivity } from "src/lib/task";
+import { deleteTask } from "src/services/taskService";
 
 export default function DeleteConfirmModal() {
     const [deleteState, setDeleteState] = useAtom(deleteConfirmAtom);
@@ -23,14 +23,10 @@ export default function DeleteConfirmModal() {
             return;
         }
 
-        const now = new Date().toISOString();
-        const taskSnapshot = taskToDelete;
+        const { tasks: nextTasks, activities: nextActivities } = deleteTask(tasks, [], deleteState.taskId);
 
-        setTasks((prev) => prev.filter((task) => task.id !== deleteState.taskId));
-
-        if (taskSnapshot) {
-            setActivities((prev) => [createTaskActivity("delete", taskSnapshot, now), ...prev]);
-        }
+        setTasks(nextTasks);
+        setActivities((prev) => [...nextActivities, ...prev]);
 
         closeModal();
     };

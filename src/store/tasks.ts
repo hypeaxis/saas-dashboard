@@ -32,40 +32,88 @@ export type TaskModalState = {
     editingTaskId: string | null;
 };
 
-export const taskModalAtom = atom<TaskModalState>({
-    isOpen: false,
-    editingTaskId: null,
-});
-
 export type TaskDetailsState = {
     isOpen: boolean;
     taskId: string | null;
 };
-
-export const taskDetailAtom = atom<TaskDetailsState>({
-    isOpen: false,
-    taskId: null,
-});
 
 export type DeleteConfirmState = {
     isOpen: boolean;
     taskId: string | null;
 };
 
-export const deleteConfirmAtom = atom<DeleteConfirmState>({
-    isOpen: false,
-    taskId: null,
-});
-
 export type ActivityHistoryState = {
     isOpen: boolean;
     taskId: string | null;
 };
 
-export const activityHistoryAtom = atom<ActivityHistoryState>({
-    isOpen: false,
-    taskId: null,
-});
+export type TaskUiState = {
+    taskModal: TaskModalState;
+    taskDetail: TaskDetailsState;
+    deleteConfirm: DeleteConfirmState;
+    activityHistory: ActivityHistoryState;
+};
+
+const initialUiState: TaskUiState = {
+    taskModal: {
+        isOpen: false,
+        editingTaskId: null,
+    },
+    taskDetail: {
+        isOpen: false,
+        taskId: null,
+    },
+    deleteConfirm: {
+        isOpen: false,
+        taskId: null,
+    },
+    activityHistory: {
+        isOpen: false,
+        taskId: null,
+    },
+};
+
+export const uiStateAtom = atom<TaskUiState>(initialUiState);
+
+export const taskModalAtom = atom(
+    (get) => get(uiStateAtom).taskModal,
+    (get, set, next: TaskModalState) => {
+        set(uiStateAtom, {
+            ...get(uiStateAtom),
+            taskModal: next,
+        });
+    }
+);
+
+export const taskDetailAtom = atom(
+    (get) => get(uiStateAtom).taskDetail,
+    (get, set, next: TaskDetailsState) => {
+        set(uiStateAtom, {
+            ...get(uiStateAtom),
+            taskDetail: next,
+        });
+    }
+);
+
+export const deleteConfirmAtom = atom(
+    (get) => get(uiStateAtom).deleteConfirm,
+    (get, set, next: DeleteConfirmState) => {
+        set(uiStateAtom, {
+            ...get(uiStateAtom),
+            deleteConfirm: next,
+        });
+    }
+);
+
+export const activityHistoryAtom = atom(
+    (get) => get(uiStateAtom).activityHistory,
+    (get, set, next: ActivityHistoryState) => {
+        set(uiStateAtom, {
+            ...get(uiStateAtom),
+            activityHistory: next,
+        });
+    }
+);
 
 export type PriorityCount = Record<Priority, number>;
 
