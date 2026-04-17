@@ -8,11 +8,11 @@ import {
 } from "src/lib/task";
 import type { Priority, Status } from "src/types/task";
 
-const priorityIcons: Record<Priority, typeof SignalLow> = {
-    low: SignalLow,
-    medium: SignalMedium,
-    high: SignalHigh,
-};
+// const priorityIcons: Record<Priority, typeof SignalLow> = {
+//     low: SignalLow,
+//     medium: SignalMedium,
+//     high: SignalHigh,
+// };
 
 export function StatusBadge({ status }: { status: Status }) {
     return (
@@ -23,11 +23,11 @@ export function StatusBadge({ status }: { status: Status }) {
 }
 
 export function PriorityBadge({ priority }: { priority: Priority }) {
-    const Icon = priorityIcons[priority];
+    // const Icon = priorityIcons[priority];
 
     return (
         <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide", TASK_PRIORITY_BADGE_CLASSES[priority])}>
-            <Icon className="size-3.5" />
+            {/* <Icon className="size-3.5" /> */}
             {TASK_PRIORITY_LABELS[priority]}
         </span>
     );

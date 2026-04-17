@@ -15,13 +15,13 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     }
 
     return (
-        <div className="min-h-screen bg-white text-foreground flex">
+        <div className="h-screen overflow-hidden bg-white text-foreground flex">
             <AppSidebar />
 
             <div className="flex flex-col flex-1 min-w-0 bg-white">
                 <AppTopbar user={{ name: session.user?.name, email: session.user?.email }} />
 
-                <main className="flex-1 overflow-auto p-6 md:p-8">
+                <main className="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
                     {children}
                 </main>
             </div>

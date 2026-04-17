@@ -15,7 +15,7 @@ interface UserProps {
 export default function AppTopbar({ user }: UserProps) {
     const setTaskModal = useSetAtom(taskModalAtom);
     const setSidebarOpen = useSetAtom(sidebarOpenAtom);
-    
+
     const getInitials = (name?: string | null) => {
         if (!name) return "U"; 
         const parts = name.trim().split(" ");
